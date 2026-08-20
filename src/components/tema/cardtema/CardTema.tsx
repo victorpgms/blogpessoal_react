@@ -13,21 +13,23 @@ function CardTema({ tema }: CardTemaProps) {
             </header>
             <p className="p-8 text-3xl bg-slate-200 h-full">{tema.descricao}</p>
 
-            <Link
-                to={`/editartema/${tema.id}`}
-                className="w-full text-slate-100 bg-indigo-400 hover:bg-indigo-800
-                        flex items-center justify-center py-2"
-            >
-                <button>Editar</button>
-            </Link>
+            <div className="flex">
+                <Link
+                    to={`/editartema/${tema.id}`}
+                    className="flex-1 py-2 text-center text-slate-100
+                   bg-indigo-400 hover:bg-indigo-800"
+                >
+                    Editar
+                </Link>
 
-            <Link
-                to={`/deletartema/${tema.id}`}
-                className="text-slate-100 bg-red-400 hover:bg-red-700 w-full
-                    flex items-center justify-center"
-            >
-                <button>Deletar</button>
-            </Link>
+                <Link
+                    to={`/deletartema/${tema.id}`}
+                    className="flex-1 py-2 text-center text-slate-100
+                   bg-red-400 hover:bg-red-700"
+                >
+                    Deletar
+                </Link>
+            </div>
         </div>
     );
 }

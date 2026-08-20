@@ -1,4 +1,5 @@
-import { useState, useContext, useEffect } from "react";
+import axios from "axios";
+import { useContext, useEffect, useState } from "react";
 import { useNavigate, useParams } from "react-router-dom";
 import { AuthContext } from "../../../contexts/AuthContext";
 import type Tema from "../../../models/Tema";
@@ -6,69 +7,87 @@ import { buscar, deletar } from "../../../services/Service";
 import { ClipLoader } from "react-spinners";
 
 function DeletarTema() {
+    // Objeto responsável redirecionar o tema para uma outra rota
     const navigate = useNavigate();
 
-    const [tema, setTema] = useState<Tema>({} as Tema);
+    // Estado responsável por controlar o loader (animação de carregamento)
     const [isLoading, setIsLoading] = useState<boolean>(false);
 
+    // Estado responsável por armazenar os dados do tema que será deletado no Backend (API)
+    const [tema, setTema] = useState<Tema>({} as Tema);
+
+    // Consumo da Context para obter os dados do tema autenticado (estado usuario)
+    // e a função handleLogout para efetuar logout caso o token seja inválido
     const { usuario, handleLogout } = useContext(AuthContext);
     const token = usuario.token;
 
+    // Acessar o parâmetro da rota (id do tema)
     const { id } = useParams<{ id: string }>();
 
-    async function buscarPorId(id: string) {
+    // Função responsável por buscar um tema pelo ID no Backend (API)
+    async function buscarTemaPorId() {
+        setIsLoading(true);
+
         try {
-            await buscar(`/${id}`, setTema, {
-                headers: {
-                    Authorization: token,
-                },
+            await buscar(`/tema/${id}`, setTema, {
+                headers: { Authorization: token },
             });
-        } catch (error: any) {
-            if (error.toString().includes("401")) {
-                handleLogout();
+        } catch (error) {
+            if (axios.isAxiosError(error)) {
+                alert(`Erro ao cadastrar o tema: ${error.response?.status}`);
+                if (error.response?.status === 401) {
+                    handleLogout();
+                }
             }
+            return;
+        } finally {
+            setIsLoading(false);
         }
     }
 
+    // useEffect para monitorar o id (parâmetro da rota)
+    useEffect(() => {
+        if (id !== undefined) {
+            buscarTemaPorId();
+        }
+    }, [id]);
+
+    // useEffect para monitorar o token
     useEffect(() => {
         if (token === "") {
-            alert("Você precisa estar logado");
+            alert("Você precisa estar logado!");
             navigate("/");
         }
     }, [token]);
 
-    useEffect(() => {
-        if (id !== undefined) {
-            buscarPorId(id);
-        }
-    }, [id]);
-
+    // Função responsável por deletar um tema pelo ID no Backend (API)
     async function deletarTema() {
         setIsLoading(true);
 
         try {
             await deletar(`/tema/${id}`, {
-                headers: {
-                    Authorization: token,
-                },
+                headers: { Authorization: token },
             });
 
-            alert("Tema apagado com sucesso");
-        } catch (error: any) {
-            if (error.toString().includes("401")) {
-                handleLogout();
-            } else {
-                alert("Erro ao deletar o tema.");
+            alert("Tema deletado com sucessso!");
+        } catch (error) {
+            if (axios.isAxiosError(error)) {
+                alert(`Erro ao cadastrar o tema: ${error.response?.status}`);
+                if (error.response?.status === 401) {
+                    handleLogout();
+                }
             }
+        } finally {
+            setIsLoading(false);
         }
 
-        setIsLoading(false);
         retornar();
     }
 
     function retornar() {
         navigate("/tema");
     }
+
     return (
         <div className="container w-1/3 mx-auto">
             <h1 className="text-4xl text-center my-4">Deletar tema</h1>
@@ -96,7 +115,7 @@ function DeletarTema() {
 
                     <button
                         className="w-full text-slate-100 bg-indigo-400
-                            hover:bg-indigo-600 flex items-center justify-center"
+                      hover:bg-indigo-600 flex items-center justify-center"
                         onClick={deletarTema}
                     >
                         {isLoading ? (
@@ -110,5 +129,4 @@ function DeletarTema() {
         </div>
     );
 }
-
 export default DeletarTema;
