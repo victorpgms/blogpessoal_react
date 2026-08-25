@@ -8,6 +8,9 @@ import { AuthProvider } from "./contexts/AuthContext";
 import Cadastro from "./pages/cadastro/Cadastro";
 import Home from "./pages/home/Home";
 import Login from "./pages/login/Login";
+import ListaPostagens from "./components/postagem/listapostagens/ListaPostagens";
+import FormPostagem from "./components/postagem/formpostagem/FormPostagem";
+import DeletarPostagem from "./components/postagem/deletarpostagem/deletarpostem";
 
 function App() {
     return (
@@ -32,6 +35,22 @@ function App() {
                             <Route
                                 path="/deletartema/:id"
                                 element={<DeletarTema />}
+                            />
+                            <Route
+                                path="/postagens"
+                                element={<ListaPostagens />}
+                            />
+                            <Route
+                                path="/cadastrarpostagem"
+                                element={<FormPostagem />}
+                            />
+                            <Route
+                                path="/editarpostagem/:id"
+                                element={<FormPostagem />}
+                            />
+                            <Route
+                                path="/deletarpostagem/:id"
+                                element={<DeletarPostagem />}
                             />
                         </Routes>
                     </div>
