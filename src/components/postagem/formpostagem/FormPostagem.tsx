@@ -96,7 +96,9 @@ function FormPostagem() {
         });
     }, [tema]);
 
-    function atualizarEstado(e: ChangeEvent<HTMLInputElement>) {
+    function atualizarEstado(
+        e: ChangeEvent<HTMLInputElement | HTMLTextAreaElement>,
+    ) {
         setPostagem({
             ...postagem,
             [e.target.name]: e.target.value,
@@ -154,84 +156,95 @@ function FormPostagem() {
     const carregandoTema = tema.descricao === "";
 
     return (
-        <div className="container flex flex-col mx-auto items-center">
-            <h1 className="text-4xl text-center my-8">
-                {id !== undefined ? "Editar Postagem" : "Cadastrar Postagem"}
-            </h1>
+        <section className="form-page page-section min-h-[70vh]">
+            <div className="page-container max-w-3xl">
+                <h1 className="mb-8 text-center text-3xl font-bold tracking-tight text-ink sm:text-4xl">
+                    {id !== undefined
+                        ? "Editar Postagem"
+                        : "Cadastrar Postagem"}
+                </h1>
 
-            <form
-                className="flex flex-col w-1/2 gap-4"
-                onSubmit={gerarNovaPostagem}
-            >
-                <div className="flex flex-col gap-2">
-                    <label htmlFor="titulo">Título da Postagem</label>
-                    <input
-                        type="text"
-                        placeholder="Título"
-                        name="titulo"
-                        required
-                        className="border-2 border-slate-700 rounded p-2"
-                        value={postagem.titulo}
-                        onChange={(e: ChangeEvent<HTMLInputElement>) =>
-                            atualizarEstado(e)
-                        }
-                    />
-                </div>
-
-                <div className="flex flex-col gap-2">
-                    <label htmlFor="titulo">Texto da Postagem</label>
-                    <input
-                        type="text"
-                        placeholder="Texto"
-                        name="texto"
-                        required
-                        className="border-2 border-slate-700 rounded p-2"
-                        value={postagem.texto}
-                        onChange={(e: ChangeEvent<HTMLInputElement>) =>
-                            atualizarEstado(e)
-                        }
-                    />
-                </div>
-
-                <div className="flex flex-col gap-2">
-                    <p>Tema da Postagem</p>
-                    <select
-                        name="tema"
-                        id="tema"
-                        className="border p-2 border-slate-800 rounded"
-                        onChange={(e) => buscarTemaPorId(e.currentTarget.value)}
-                    >
-                        <option value="" selected disabled>
-                            Selecione um Tema
-                        </option>
-
-                        <>
-                            {temas.map((tema) => (
-                                <>
-                                    <option value={tema.id}>
-                                        {tema.descricao}
-                                    </option>
-                                </>
-                            ))}{" "}
-                        </>
-                    </select>
-                </div>
-
-                <button
-                    type="submit"
-                    className="rounded disabled:bg-slate-200 bg-indigo-400 hover:bg-indigo-800 text-white font-bold w-1/2 mx-auto py-2 flex justify-center"
-                    disabled={carregandoTema}
+                <form
+                    className="form-page-card form-card flex flex-col gap-5"
+                    onSubmit={gerarNovaPostagem}
                 >
-                    {isLoading ? (
-                        <ClipLoader color="#ffffff" size={24} />
-                    ) : (
-                        <span>
-                            {id === undefined ? "Cadastrar" : "Atualizar"}
-                        </span>
-                    )}
-                </button>
-            </form>
-        </div>
+                    <div>
+                        <label className="field-label" htmlFor="titulo">
+                            Título da Postagem
+                        </label>
+                        <input
+                            type="text"
+                            id="titulo"
+                            placeholder="Título"
+                            name="titulo"
+                            required
+                            className="form-field"
+                            value={postagem.titulo}
+                            onChange={(e: ChangeEvent<HTMLInputElement>) =>
+                                atualizarEstado(e)
+                            }
+                        />
+                    </div>
+
+                    <div>
+                        <label className="field-label" htmlFor="texto">
+                            Texto da Postagem
+                        </label>
+                        <textarea
+                            id="texto"
+                            name="texto"
+                            placeholder="Escreva o texto da postagem"
+                            required
+                            rows={5}
+                            className="form-field min-h-32 resize-y"
+                            value={postagem.texto}
+                            onChange={(e: ChangeEvent<HTMLTextAreaElement>) =>
+                                atualizarEstado(e)
+                            }
+                        />
+                    </div>
+
+                    <div>
+                        <label className="field-label" htmlFor="tema">
+                            Tema da Postagem
+                        </label>
+                        <select
+                            name="tema"
+                            id="tema"
+                            className="form-field"
+                            defaultValue=""
+                            onChange={(e) =>
+                                buscarTemaPorId(e.currentTarget.value)
+                            }
+                        >
+                            <option value="" disabled>
+                                Selecione um Tema
+                            </option>
+
+                            {temas.map((tema) => (
+                                <option key={tema.id} value={tema.id}>
+                                    {tema.descricao}
+                                </option>
+                            ))}
+                        </select>
+                    </div>
+
+                    <button
+                        type="submit"
+                        className="button-primary mt-2 w-full sm:mx-auto sm:w-auto sm:min-w-48"
+                        disabled={carregandoTema || isLoading}
+                    >
+                        {isLoading ? (
+                            <ClipLoader color="#ffffff" size={24} />
+                        ) : (
+                            <span>
+                                {id === undefined ? "Cadastrar" : "Atualizar"}
+                            </span>
+                        )}
+                    </button>
+                </form>
+            </div>
+        </section>
     );
 }
 

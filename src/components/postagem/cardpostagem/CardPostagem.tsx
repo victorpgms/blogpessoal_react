@@ -1,3 +1,9 @@
+import {
+    CalendarBlank,
+    PencilSimple,
+    Tag,
+    Trash,
+} from "@phosphor-icons/react";
 import { Link } from "react-router-dom";
 import type Postagem from "../../../models/Postagem";
 
@@ -7,29 +13,42 @@ interface CardPostagensProps {
 
 function CardPostagem({ postagem }: CardPostagensProps) {
     return (
-        <div
-            className="border-slate-900 border 
-            flex flex-col rounded overflow-hidden justify-between"
-        >
+        <article className="group flex h-full flex-col justify-between overflow-hidden rounded-2xl border border-line bg-panel shadow-sm transition duration-200 hover:-translate-y-0.5 hover:shadow-md">
             <div>
-                <div className="flex w-full bg-indigo-400 py-2 px-4 items-center gap-4">
+                <header className="flex w-full items-center gap-3 border-b border-line bg-panel-muted px-5 py-4">
                     <img
                         src={postagem.usuario?.foto}
-                        className="h-12 rounded-full"
+                        className="size-11 rounded-full object-cover ring-2 ring-panel"
                         alt={postagem.usuario?.nome}
                     />
-                    <h3 className="text-lg font-bold text-center uppercase">
-                        {postagem.usuario?.nome}
-                    </h3>
-                </div>
-                <div className="p-4 ">
-                    <h4 className="text-lg font-semibold uppercase">
+                    <div className="min-w-0">
+                        <p className="text-xs font-medium uppercase tracking-wider text-muted">
+                            Publicado por
+                        </p>
+                        <h3 className="truncate font-semibold text-ink">
+                            {postagem.usuario?.nome}
+                        </h3>
+                    </div>
+                </header>
+                <div className="p-5">
+                    <h4 className="text-xl font-bold tracking-tight text-ink">
                         {postagem.titulo}
                     </h4>
-                    <p>{postagem.texto}</p>
-                    <p>Tema: {postagem.tema?.descricao}</p>
-                    <p>
-                        Data:{" "}
+                    <p className="mt-3 leading-7 text-muted">
+                        {postagem.texto}
+                    </p>
+                    <div className="mt-5 flex flex-wrap items-center gap-2 text-sm text-muted">
+                        <span className="inline-flex items-center gap-1.5 rounded-full bg-brand/10 px-3 py-1 font-medium text-brand">
+                            <Tag size={16} weight="bold" aria-hidden="true" />
+                            {postagem.tema?.descricao}
+                        </span>
+                    </div>
+                    <p className="mt-4 flex items-start gap-2 text-sm leading-6 text-muted">
+                        <CalendarBlank
+                            className="mt-0.5 shrink-0"
+                            size={17}
+                            aria-hidden="true"
+                        />
                         {new Intl.DateTimeFormat("pt-BR", {
                             dateStyle: "full",
                             timeStyle: "medium",
@@ -37,23 +56,23 @@ function CardPostagem({ postagem }: CardPostagensProps) {
                     </p>
                 </div>
             </div>
-            <div className="flex">
+            <footer className="grid grid-cols-2 border-t border-line p-2">
                 <Link
                     to={`/editarpostagem/${postagem.id}`}
-                    className="w-full text-white bg-indigo-400 
-                    hover:bg-indigo-800 flex items-center justify-center py-2"
+                    className="inline-flex min-h-11 items-center justify-center gap-2 rounded-xl font-semibold text-brand hover:bg-brand/10 focus-visible:outline-none focus-visible:ring-4 focus-visible:ring-brand/20"
                 >
-                    <button>Editar</button>
+                    <PencilSimple size={18} weight="bold" aria-hidden="true" />
+                    Editar
                 </Link>
                 <Link
                     to={`/deletarpostagem/${postagem.id}`}
-                    className="text-white bg-red-400 
-                    hover:bg-red-700 w-full flex items-center justify-center"
+                    className="inline-flex min-h-11 items-center justify-center gap-2 rounded-xl font-semibold text-danger hover:bg-danger/10 focus-visible:outline-none focus-visible:ring-4 focus-visible:ring-danger/20"
                 >
-                    <button>Deletar</button>
+                    <Trash size={18} weight="bold" aria-hidden="true" />
+                    Deletar
                 </Link>
-            </div>
-        </div>
+            </footer>
+        </article>
     );
 }
 

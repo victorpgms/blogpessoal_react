@@ -134,32 +134,32 @@ function AtualizarPerfil() {
     }
 
     return (
-        <div className="min-h-screen bg-gray-50 py-12 px-4">
-            <div className="container mx-auto max-w-7xl">
-                <div className="bg-white rounded-lg shadow-lg overflow-hidden">
+        <div className="page-section min-h-screen bg-app">
+            <div className="page-container">
+                <div className="mx-auto max-w-6xl overflow-hidden rounded-2xl border border-line bg-panel shadow-xl">
                     <div className="grid grid-cols-1 lg:grid-cols-[1fr_2fr]">
                         {/* Seção da foto */}
-                        <div className="bg-indigo-500 p-8 flex flex-col items-center justify-center">
+                        <div className="flex flex-col items-center justify-center border-b border-line bg-panel-muted p-8 lg:border-b-0 lg:border-r">
                             <div className="relative">
                                 <img
                                     src={user.foto}
                                     alt={user.nome}
-                                    className="w-48 h-48 object-cover rounded-full border-4 border-white shadow-lg"
+                                    className="size-44 rounded-full border-4 border-panel object-cover shadow-lg ring-1 ring-line sm:size-48"
                                 />
                             </div>
 
-                            <h2 className="text-white text-2xl font-bold mt-6 text-center">
+                            <h2 className="mt-6 text-center text-2xl font-bold text-ink">
                                 {user.nome}
                             </h2>
 
-                            <p className="text-indigo-100 text-base mt-2">
+                            <p className="mt-2 text-base text-muted">
                                 {user.usuario}
                             </p>
                         </div>
 
                         {/* Seção do formulário */}
                         <div className="p-8 lg:p-12">
-                            <h1 className="text-4xl text-center my-2">
+                            <h1 className="mb-8 text-center text-3xl font-bold tracking-tight text-ink sm:text-4xl">
                                 Editar Perfil
                             </h1>
 
@@ -167,10 +167,10 @@ function AtualizarPerfil() {
                                 onSubmit={atualizarUsuario}
                                 className="space-y-4"
                             >
-                                <div className="flex flex-col">
+                                <div>
                                     <label
                                         htmlFor="nome"
-                                        className="font-bold mb-1"
+                                        className="field-label"
                                     >
                                         Nome
                                     </label>
@@ -180,7 +180,7 @@ function AtualizarPerfil() {
                                         id="nome"
                                         name="nome"
                                         placeholder="Nome"
-                                        className="px-4 py-2 border-2 border-slate-700 rounded focus:outline-none"
+                                        className="form-field"
                                         value={user.nome || ""}
                                         onChange={(
                                             e: ChangeEvent<HTMLInputElement>,
@@ -189,10 +189,10 @@ function AtualizarPerfil() {
                                     />
                                 </div>
 
-                                <div className="flex flex-col">
+                                <div>
                                     <label
                                         htmlFor="usuario"
-                                        className="font-bold mb-1"
+                                        className="field-label"
                                     >
                                         Usuario
                                     </label>
@@ -202,7 +202,7 @@ function AtualizarPerfil() {
                                         id="usuario"
                                         name="usuario"
                                         placeholder="Usuario"
-                                        className="px-4 py-2 border-2 border-slate-700 rounded bg-gray-100 cursor-not-allowed"
+                                        className="form-field"
                                         disabled
                                         value={user.usuario || ""}
                                         onChange={(
@@ -211,10 +211,10 @@ function AtualizarPerfil() {
                                     />
                                 </div>
 
-                                <div className="flex flex-col">
+                                <div>
                                     <label
                                         htmlFor="foto"
-                                        className="font-bold mb-1"
+                                        className="field-label"
                                     >
                                         Foto
                                     </label>
@@ -224,7 +224,7 @@ function AtualizarPerfil() {
                                         id="foto"
                                         name="foto"
                                         placeholder="Foto"
-                                        className="px-4 py-2 border-2 border-slate-700 rounded focus:outline-none"
+                                        className="form-field"
                                         value={user.foto || ""}
                                         onChange={(
                                             e: ChangeEvent<HTMLInputElement>,
@@ -233,10 +233,10 @@ function AtualizarPerfil() {
                                     />
                                 </div>
 
-                                <div className="flex flex-col">
+                                <div>
                                     <label
                                         htmlFor="senha"
-                                        className="font-bold mb-1"
+                                        className="field-label"
                                     >
                                         Senha
                                     </label>
@@ -246,7 +246,7 @@ function AtualizarPerfil() {
                                         id="senha"
                                         name="senha"
                                         placeholder="Senha"
-                                        className="px-4 py-2 border-2 border-slate-700 rounded focus:outline-none"
+                                        className="form-field"
                                         value={user.senha || ""}
                                         onChange={(
                                             e: ChangeEvent<HTMLInputElement>,
@@ -256,10 +256,10 @@ function AtualizarPerfil() {
                                     />
                                 </div>
 
-                                <div className="flex flex-col">
+                                <div>
                                     <label
                                         htmlFor="confirmarSenha"
-                                        className="font-bold mb-1"
+                                        className="field-label"
                                     >
                                         Confirmar Senha
                                     </label>
@@ -269,7 +269,7 @@ function AtualizarPerfil() {
                                         id="confirmarSenha"
                                         name="confirmarSenha"
                                         placeholder="Confirmar Senha"
-                                        className="px-4 py-2 border-2 border-slate-700 rounded focus:outline-none"
+                                        className="form-field"
                                         value={confirmarSenha}
                                         onChange={(
                                             e: ChangeEvent<HTMLInputElement>,
@@ -279,10 +279,10 @@ function AtualizarPerfil() {
                                     />
                                 </div>
 
-                                <div className="flex justify-around gap-8 pt-4">
+                                <div className="flex flex-col-reverse gap-3 pt-4 sm:flex-row">
                                     <button
                                         type="button"
-                                        className="rounded text-white bg-red-400 hover:bg-red-700 w-1/2 py-2 font-bold"
+                                        className="button-secondary w-full"
                                         onClick={retornar}
                                     >
                                         Cancelar
@@ -290,7 +290,7 @@ function AtualizarPerfil() {
 
                                     <button
                                         type="submit"
-                                        className="rounded text-white bg-indigo-400 hover:bg-indigo-900 w-1/2 py-2 flex justify-center font-bold"
+                                        className="button-primary w-full"
                                         disabled={isLoading}
                                     >
                                         {isLoading ? (

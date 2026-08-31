@@ -133,43 +133,49 @@ function FormTema() {
     }
 
     return (
-        <div className="container flex flex-col items-center justify-center mx-auto">
-            <h1 className="text-4xl text-center my-8">
-                {id === undefined ? "Cadastrar" : "Editar"} Tema
-            </h1>
+        <section className="page-section min-h-[70vh]">
+            <div className="page-container max-w-2xl">
+                <h1 className="mb-8 text-center text-3xl font-bold tracking-tight text-ink sm:text-4xl">
+                    {id === undefined ? "Cadastrar" : "Editar"} Tema
+                </h1>
 
-            <form
-                className="w-1/2 flex flex-col gap-4"
-                onSubmit={gerarNovoTema}
-            >
-                <div className="flex flex-col gap-2">
-                    <label htmlFor="descricao">Descrição do Tema</label>
+                <form
+                    className="form-card flex flex-col gap-5"
+                    onSubmit={gerarNovoTema}
+                >
+                    <div>
+                    <label className="field-label" htmlFor="descricao">
+                        Descrição do Tema
+                    </label>
                     <input
                         type="text"
+                        id="descricao"
                         placeholder="Descreva aqui seu tema"
                         name="descricao"
-                        className="border-2 border-slate-700 rounded p-2"
-                        value={tema.descricao}
+                        className="form-field"
+                        value={tema.descricao || ""}
                         onChange={(e: ChangeEvent<HTMLInputElement>) =>
                             atualizarEstado(e)
                         }
                     />
-                </div>
-                <button
-                    className="rounded text-slate-100 bg-indigo-400
-                    hover:bg-indigo-800 w-1/2 py-2 mx-auto flex justify-center"
-                    type="submit"
-                >
-                    {isLoading ? (
-                        <ClipLoader color="#ffffff" size={24} />
-                    ) : (
-                        <span>
-                            {id === undefined ? "Cadastrar" : "Atualizar"} Tema
-                        </span>
-                    )}
-                </button>
-            </form>
-        </div>
+                    </div>
+                    <button
+                        className="button-primary mt-2 w-full sm:mx-auto sm:w-auto sm:min-w-48"
+                        type="submit"
+                        disabled={isLoading}
+                    >
+                        {isLoading ? (
+                            <ClipLoader color="#ffffff" size={24} />
+                        ) : (
+                            <span>
+                                {id === undefined ? "Cadastrar" : "Atualizar"}{" "}
+                                Tema
+                            </span>
+                        )}
+                    </button>
+                </form>
+            </div>
+        </section>
     );
 }
 
