@@ -1,22 +1,18 @@
-import Popup from 'reactjs-popup';
-
-import 'reactjs-popup/dist/index.css';
-import FormPostagem from '../formpostagem/FormPostagem';
+import { Plus } from "@phosphor-icons/react";
+import Popup from "reactjs-popup";
+import FormPostagem from "../formpostagem/FormPostagem";
 
 function ModalPostagem() {
     return (
         <>
             <Popup
                 trigger={
-                    <button className="border rounded px-4 py-2 hover:bg-white hover:text-indigo-800">
+                    <button className="button-primary px-6">
+                        <Plus size={19} weight="bold" aria-hidden="true" />
                         Nova Postagem
                     </button>
                 }
                 modal
-                contentStyle={{
-                    borderRadius: '1rem',
-                    paddingBottom: '2rem'
-                }}
             >
                 <FormPostagem />
             </Popup>

@@ -90,103 +90,123 @@ function Cadastro() {
     console.log(confirmarSenha);
 
     return (
-        <>
+        <div className="grid min-h-screen grid-cols-1 bg-app lg:grid-cols-2">
             <div
-                className="grid grid-cols-1 lg:grid-cols-2 h-screen
-            place-items-center font-bold"
-            >
-                <div
-                    className="bg-[url('https://i.imgur.com/ZZFAmzo.jpg')] lg:block hidden bg-no-repeat
-                w-full min-h-screen bg-cover bg-center"
-                ></div>
+                className="relative hidden min-h-screen w-full bg-[url('https://i.imgur.com/ZZFAmzo.jpg')] bg-cover bg-center before:absolute before:inset-0 before:bg-slate-950/20 lg:block dark:before:bg-slate-950/40"
+                role="img"
+                aria-label="Paisagem decorativa"
+            />
+            <div className="flex items-center justify-center px-4 py-10 sm:px-8">
                 <form
-                    className="flex justify-center items-center flex-col w-2/3 gap-3"
+                    className="form-card flex max-w-xl flex-col gap-4"
                     onSubmit={cadastrarNovoUsuario}
                 >
-                    <h2 className="text-slate-900 text-5xl">Cadastrar</h2>
-                    <div className="flex flex-col w-full">
-                        <label htmlFor="nome">Nome</label>
+                    <div className="mb-1 text-center">
+                        <p className="mb-2 text-sm font-semibold uppercase tracking-[0.18em] text-brand">
+                            Junte-se à comunidade
+                        </p>
+                        <h1 className="text-4xl font-bold tracking-tight text-ink sm:text-5xl">
+                            Cadastrar
+                        </h1>
+                        <p className="mt-3 font-normal text-muted">
+                            Crie seu perfil e comece a compartilhar suas ideias.
+                        </p>
+                    </div>
+                    <div>
+                        <label className="field-label" htmlFor="nome">
+                            Nome
+                        </label>
                         <input
                             type="text"
                             id="nome"
                             name="nome"
                             placeholder="Nome"
-                            className="border-2 border-slate-700 rounded p-2"
+                            className="form-field"
                             value={usuario.nome}
                             onChange={(e: ChangeEvent<HTMLInputElement>) =>
                                 atualizarEstado(e)
                             }
                         />
                     </div>
-                    <div className="flex flex-col w-full">
-                        <label htmlFor="usuario">Usuario</label>
+                    <div>
+                        <label className="field-label" htmlFor="usuario">
+                            Usuario
+                        </label>
                         <input
                             type="text"
                             id="usuario"
                             name="usuario"
                             placeholder="Usuario"
-                            className="border-2 border-slate-700 rounded p-2"
+                            className="form-field"
                             value={usuario.usuario}
                             onChange={(e: ChangeEvent<HTMLInputElement>) =>
                                 atualizarEstado(e)
                             }
                         />
                     </div>
-                    <div className="flex flex-col w-full">
-                        <label htmlFor="foto">Foto</label>
+                    <div>
+                        <label className="field-label" htmlFor="foto">
+                            Foto
+                        </label>
                         <input
                             type="text"
                             id="foto"
                             name="foto"
                             placeholder="Foto"
-                            className="border-2 border-slate-700 rounded p-2"
+                            className="form-field"
                             value={usuario.foto}
                             onChange={(e: ChangeEvent<HTMLInputElement>) =>
                                 atualizarEstado(e)
                             }
                         />
                     </div>
-                    <div className="flex flex-col w-full">
-                        <label htmlFor="senha">Senha</label>
+                    <div>
+                        <label className="field-label" htmlFor="senha">
+                            Senha
+                        </label>
                         <input
                             type="password"
                             id="senha"
                             name="senha"
                             placeholder="Senha"
-                            className="border-2 border-slate-700 rounded p-2"
+                            className="form-field"
                             value={usuario.senha}
                             onChange={(e: ChangeEvent<HTMLInputElement>) =>
                                 atualizarEstado(e)
                             }
                         />
                     </div>
-                    <div className="flex flex-col w-full">
-                        <label htmlFor="confirmarSenha">Confirmar Senha</label>
+                    <div>
+                        <label
+                            className="field-label"
+                            htmlFor="confirmarSenha"
+                        >
+                            Confirmar Senha
+                        </label>
                         <input
                             type="password"
                             id="confirmarSenha"
                             name="confirmarSenha"
                             placeholder="Confirmar Senha"
-                            className="border-2 border-slate-700 rounded p-2"
+                            className="form-field"
                             value={confirmarSenha}
                             onChange={(e: ChangeEvent<HTMLInputElement>) =>
                                 handleConfirmarSenha(e)
                             }
                         />
                     </div>
-                    <div className="flex justify-around w-full gap-8">
+                    <div className="flex w-full flex-col-reverse gap-3 pt-2 sm:flex-row">
                         <button
                             type="reset"
-                            className="rounded text-white bg-red-400 hover:bg-red-700 w-1/2 py-2"
+                            className="button-secondary w-full"
                             onClick={retornar}
                         >
                             Cancelar
                         </button>
                         <button
                             type="submit"
-                            className="rounded text-white bg-indigo-400
-                    hover:bg-indigo-900 w-1/2 py-2
-                    flex justify-center"
+                            className="button-primary w-full"
+                            disabled={isLoading}
                         >
                             {isLoading ? (
                                 <ClipLoader color="#ffffff" size={24} />
@@ -197,7 +217,7 @@ function Cadastro() {
                     </div>
                 </form>
             </div>
-        </>
+        </div>
     );
 }
 

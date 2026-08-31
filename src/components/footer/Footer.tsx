@@ -7,7 +7,7 @@ import { useContext, type ReactNode } from "react";
 import { AuthContext } from "../../contexts/AuthContext";
 
 function Footer() {
-    let data = new Date().getFullYear();
+    const data = new Date().getFullYear();
 
     const { usuario } = useContext(AuthContext);
     const token = usuario.token;
@@ -16,19 +16,21 @@ function Footer() {
 
     if (token !== "") {
         component = (
-            <div className="flex justify-center bg-indigo-900 text-white">
-                <div className="container flex flex-col items-center py-4">
-                    <p className="text-xl font-bold">
+            <footer className="mt-auto border-t border-line bg-panel text-ink">
+                <div className="page-container flex flex-col items-center gap-2 py-8 text-center">
+                    <p className="font-semibold tracking-tight">
                         Blog Pessoal Generation | Copyright: {data}
                     </p>
-                    <p className="text-lg">Acesse nossas redes sociais</p>
-                    <div className="flex gap-2">
-                        <LinkedinLogo size={48} weight="bold" />
-                        <InstagramLogo size={48} weight="bold" />
-                        <FacebookLogo size={48} weight="bold" />
+                    <p className="text-sm text-muted">
+                        Acesse nossas redes sociais
+                    </p>
+                    <div className="mt-1 flex gap-2 text-muted">
+                        <LinkedinLogo size={26} weight="bold" />
+                        <InstagramLogo size={26} weight="bold" />
+                        <FacebookLogo size={26} weight="bold" />
                     </div>
                 </div>
-            </div>
+            </footer>
         );
     }
 

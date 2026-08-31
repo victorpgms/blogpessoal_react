@@ -74,32 +74,33 @@ function DeletarPostagem() {
     }
     
     return (
-        <div className='container w-1/3 mx-auto'>
-            <h1 className='text-4xl text-center my-4'>Deletar Postagem</h1>
+        <section className="page-section min-h-[70vh]">
+            <div className="page-container max-w-2xl">
+            <h1 className="mb-3 text-center text-3xl font-bold tracking-tight text-ink sm:text-4xl">Deletar Postagem</h1>
 
-            <p className='text-center font-semibold mb-4'>
+            <p className="mb-8 text-center font-medium text-muted">
                 Você tem certeza de que deseja apagar a postagem a seguir?
             </p>
 
-            <div className='border flex flex-col rounded-2xl overflow-hidden justify-between'>
+            <div className="surface-card flex flex-col overflow-hidden">
                 <header 
-                    className='py-2 px-6 bg-indigo-600 text-white font-bold text-2xl'>
+                    className="border-b border-line bg-panel-muted px-6 py-4 text-xl font-bold text-ink">
                     Postagem
                 </header>
-                <div className="p-4">
-                    <p className='text-xl h-full'>{postagem.titulo}</p>
-                    <p>{postagem.texto}</p>
+                <div className="p-6">
+                    <p className="text-xl font-semibold text-ink">{postagem.titulo}</p>
+                    <p className="mt-2 leading-7 text-muted">{postagem.texto}</p>
                 </div>
-                <div className="flex">
+                <div className="flex flex-col-reverse gap-3 border-t border-line p-4 sm:flex-row">
                     <button 
-                        className='text-slate-100 bg-red-400 hover:bg-red-600 w-full py-2'
+                        className="button-secondary w-full"
                         onClick={retornar}>
                         Não
                     </button>
                     <button 
-                        className='w-full text-slate-100 bg-indigo-400 
-                        hover:bg-indigo-600 flex items-center justify-center'
-                        onClick={deletarPostagem}>
+                        className="button-danger w-full"
+                        onClick={deletarPostagem}
+                        disabled={isLoading}>
 
                         { isLoading ? 
                             <ClipLoader 
@@ -112,7 +113,8 @@ function DeletarPostagem() {
                     </button>
                 </div>
             </div>
-        </div>
+            </div>
+        </section>
     )
 }
 
