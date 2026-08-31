@@ -63,29 +63,28 @@ function ListaTemas() {
     return (
         <>
             {isLoading && (
-                <div className="flex justify-center w-full my-8">
-                    <SyncLoader color="#312e81" size={32} />
+                <div className="flex w-full justify-center py-14 text-brand">
+                    <SyncLoader color="var(--app-brand)" size={14} />
                 </div>
             )}
 
-            <div className="flex justify-center w-full my-4">
-                <div className="container flex flex-col">
+            <section className="page-section min-h-[70vh]">
+                <div className="page-container flex flex-col">
                     {!isLoading && temas.length === 0 && (
-                        <span className="text-3xl text-center my-8">
+                        <span className="surface-card my-8 px-6 py-12 text-center text-xl font-semibold text-muted sm:text-2xl">
                             Nenhum Tema foi encontrado!
                         </span>
                     )}
 
                     <div
-                        className="grid grid-cols-1 md:grid-cols-2
-                        lg:grid-cols-3 gap-8"
+                        className="grid grid-cols-1 gap-6 md:grid-cols-2 lg:grid-cols-3"
                     >
                         {temas.map((tema) => (
                             <CardTema key={tema.id} tema={tema} />
                         ))}
                     </div>
                 </div>
-            </div>
+            </section>
         </>
     );
 }

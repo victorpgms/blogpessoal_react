@@ -38,74 +38,92 @@ function Login() {
         handleLogin(usuarioLogin);
     }
 
-    console.log(JSON.stringify(usuarioLogin));
     return (
-        <>
-            <div className="grid grid-cols-1 lg:grid-cols-2 h-screen place-items-center font-bold ">
+        <div className="grid min-h-screen grid-cols-1 bg-app lg:grid-cols-2">
+            <div className="flex items-center justify-center px-4 py-10 sm:px-8">
                 <form
-                    className="flex justify-center items-center flex-col w-1/2 gap-4"
+                    className="form-card flex max-w-md flex-col gap-5"
                     onSubmit={login}
                 >
-                    <h2 className="text-slate-900 text-5xl ">Entrar</h2>
-                    <div className="flex flex-col w-full">
-                        <label htmlFor="usuario">Usuário</label>
+                    <div className="mb-1 text-center">
+                        <p className="mb-2 text-sm font-semibold uppercase tracking-[0.18em] text-brand">
+                            Blog Pessoal
+                        </p>
+                        <h1 className="text-4xl font-bold tracking-tight text-ink sm:text-5xl">
+                            Entrar
+                        </h1>
+                        <p className="mt-3 font-normal text-muted">
+                            Boas-vindas de volta. Acesse sua conta para
+                            continuar.
+                        </p>
+                    </div>
+                    <div>
+                        <label className="field-label" htmlFor="usuario">
+                            Usuário
+                        </label>
                         <input
                             type="text"
                             id="usuario"
                             name="usuario"
                             placeholder="Usuario"
-                            className="border-2 border-slate-700 rounded p-2"
+                            className="form-field"
                             value={usuarioLogin.usuario}
                             onChange={(e: ChangeEvent<HTMLInputElement>) =>
                                 atualizarEstado(e)
                             }
+                            autoComplete="username"
+                            required
                         />
                     </div>
-                    <div className="flex flex-col w-full">
-                        <label htmlFor="senha">Senha</label>
+                    <div>
+                        <label className="field-label" htmlFor="senha">
+                            Senha
+                        </label>
                         <input
                             type="password"
                             id="senha"
                             name="senha"
                             placeholder="Senha"
-                            className="border-2 border-slate-700 rounded p-2"
+                            className="form-field"
                             value={usuarioLogin.senha}
                             onChange={(e: ChangeEvent<HTMLInputElement>) =>
                                 atualizarEstado(e)
                             }
+                            autoComplete="current-password"
+                            required
                         />
                     </div>
-                    {isLoading ? (
-                        <ClipLoader color="#ffffff" size={24} />
-                    ) : (
-                        <span>Entrar</span>
-                    )}
                     <button
                         type="submit"
-                        className="rounded bg-indigo-400 flex justify-center
-                                   hover:bg-indigo-900 text-white w-1/2 py-2"
+                        className="button-primary w-full"
+                        disabled={isLoading}
                     >
-                        <span>Entrar</span>
+                        {isLoading ? (
+                            <ClipLoader color="#ffffff" size={22} />
+                        ) : (
+                            <span>Entrar</span>
+                        )}
                     </button>
 
-                    <hr className="border-slate-800 w-full" />
+                    <hr className="w-full border-line" />
 
-                    <p>
+                    <p className="text-center font-normal text-muted">
                         Ainda não tem uma conta?{" "}
                         <Link
                             to="/cadastro"
-                            className="text-indigo-800 hover:underline"
+                            className="font-semibold text-brand hover:text-brand-hover hover:underline focus-visible:rounded focus-visible:outline-none focus-visible:ring-4 focus-visible:ring-brand/20"
                         >
                             Cadastre-se
                         </Link>
                     </p>
                 </form>
-                <div
-                    className="bg-[url('https://i.imgur.com/ZZFAmzo.jpg')] lg:block hidden bg-no-repeat
-                            w-full min-h-screen bg-cover bg-center"
-                ></div>
             </div>
-        </>
+            <div
+                className="relative hidden min-h-screen w-full bg-[url('https://ik.imagekit.io/vpgms/BlogPessoal/20260816_064924.jpg')] bg-cover bg-center before:absolute before:inset-0 before:bg-slate-950/20 lg:block dark:before:bg-slate-950/40"
+                role="img"
+                aria-label="Paisagem decorativa"
+            />
+        </div>
     );
 }
 

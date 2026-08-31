@@ -1,3 +1,4 @@
+import { PencilSimple, Tag, Trash } from "@phosphor-icons/react";
 import { Link } from "react-router-dom";
 import type Tema from "../../../models/Tema";
 
@@ -7,30 +8,33 @@ interface CardTemaProps {
 
 function CardTema({ tema }: CardTemaProps) {
     return (
-        <div className="border flex flex-col rounded-2xl overflow-hidden justify-between">
-            <header className="py-2 px-6 bg-indigo-800 text-white font-bold text-2xl">
-                Tema
+        <article className="group flex h-full flex-col justify-between overflow-hidden rounded-2xl border border-line bg-panel shadow-sm transition duration-200 hover:-translate-y-0.5 hover:shadow-md">
+            <header className="flex items-center gap-2 border-b border-line bg-panel-muted px-6 py-4 text-sm font-semibold uppercase tracking-wider text-muted">
+                <Tag size={18} weight="bold" aria-hidden="true" />
+                Tema do blog
             </header>
-            <p className="p-8 text-3xl bg-slate-200 h-full">{tema.descricao}</p>
+            <p className="h-full p-8 text-2xl font-bold tracking-tight text-ink">
+                {tema.descricao}
+            </p>
 
-            <div className="flex">
+            <footer className="grid grid-cols-2 border-t border-line p-2">
                 <Link
                     to={`/editartema/${tema.id}`}
-                    className="flex-1 py-2 text-center text-slate-100
-                   bg-indigo-400 hover:bg-indigo-800"
+                    className="inline-flex min-h-11 items-center justify-center gap-2 rounded-xl font-semibold text-brand hover:bg-brand/10 focus-visible:outline-none focus-visible:ring-4 focus-visible:ring-brand/20"
                 >
+                    <PencilSimple size={18} weight="bold" aria-hidden="true" />
                     Editar
                 </Link>
 
                 <Link
                     to={`/deletartema/${tema.id}`}
-                    className="flex-1 py-2 text-center text-slate-100
-                   bg-red-400 hover:bg-red-700"
+                    className="inline-flex min-h-11 items-center justify-center gap-2 rounded-xl font-semibold text-danger hover:bg-danger/10 focus-visible:outline-none focus-visible:ring-4 focus-visible:ring-danger/20"
                 >
+                    <Trash size={18} weight="bold" aria-hidden="true" />
                     Deletar
                 </Link>
-            </div>
-        </div>
+            </footer>
+        </article>
     );
 }
 
