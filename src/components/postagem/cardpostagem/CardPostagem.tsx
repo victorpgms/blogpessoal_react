@@ -6,6 +6,7 @@ import {
 } from "@phosphor-icons/react";
 import { Link } from "react-router-dom";
 import type Postagem from "../../../models/Postagem";
+import { FOTO_PADRAO } from "../../../utils/imagemPadrao";
 
 interface CardPostagensProps {
     postagem: Postagem;
@@ -17,9 +18,13 @@ function CardPostagem({ postagem }: CardPostagensProps) {
             <div>
                 <header className="flex w-full items-center gap-3 border-b border-line bg-panel-muted px-5 py-4">
                     <img
-                        src={postagem.usuario?.foto}
+                        src={postagem.usuario?.foto?.trim() || FOTO_PADRAO}
                         className="size-11 rounded-full object-cover ring-2 ring-panel"
                         alt={postagem.usuario?.nome}
+                        onError={(event) => {
+                            event.currentTarget.onerror = null;
+                            event.currentTarget.src = FOTO_PADRAO;
+                        }}
                     />
                     <div className="min-w-0">
                         <p className="text-xs font-medium uppercase tracking-wider text-muted">

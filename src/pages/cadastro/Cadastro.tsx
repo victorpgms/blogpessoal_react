@@ -1,5 +1,4 @@
 import {
-    useEffect,
     useState,
     type ChangeEvent,
     type SyntheticEvent,
@@ -10,6 +9,8 @@ import { cadastrarUsuario } from "../../services/Service";
 import axios from "axios";
 import ClipLoader from "react-spinners/ClipLoader";
 import { ToastAlerta } from "../../utils/ToastAlerta";
+import { FOTO_PADRAO } from "../../utils/imagemPadrao";
+import { normalizarEmail } from "../../utils/normalizarEmail";
 
 function Cadastro() {
     // Objeto responsavel por Redirecionar o usuario para outra rota
@@ -30,18 +31,16 @@ function Cadastro() {
     // Estado responsavel por guardar senha no campo confirmar senha
     const [confirmarSenha, setConfirmarSenha] = useState<string>("");
 
-    // tratar do efeito colateral do sucesso do cadastro e redirecionar para a página de login
-    useEffect(() => {
-        if (usuario.id !== 0) {
-            retornar();
-        }
-    }, [usuario]);
-
     // Funçao responsavel por atualizar o estado usuario
     function atualizarEstado(e: ChangeEvent<HTMLInputElement>) {
+        const valor =
+            e.target.name === "usuario"
+                ? normalizarEmail(e.target.value)
+                : e.target.value;
+
         setUsuario({
             ...usuario,
-            [e.target.name]: e.target.value,
+            [e.target.name]: valor,
         });
     }
     // Funçao responsavel por atualizar o estado confirmarSenha
@@ -66,8 +65,19 @@ function Cadastro() {
         setIsLoading(true);
 
         try {
-            await cadastrarUsuario(`/usuarios/cadastrar`, usuario, setUsuario);
+            const usuarioNormalizado = {
+                ...usuario,
+                usuario: normalizarEmail(usuario.usuario),
+                foto: usuario.foto.trim() || FOTO_PADRAO,
+            };
+
+            await cadastrarUsuario(
+                `/usuarios/cadastrar`,
+                usuarioNormalizado,
+                setUsuario,
+            );
             ToastAlerta("Usuario cadastrado com sucesso!", "sucesso");
+            navigate("/");
         } catch (error) {
             if (axios.isAxiosError(error) && error.response) {
                 ToastAlerta(`Erro ao cadastrar o usuário: ${error.response.status}`, "erro");

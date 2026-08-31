@@ -9,13 +9,19 @@ import { Link, useNavigate } from "react-router-dom";
 import type UsuarioLogin from "../../models/UsuarioLogin";
 import { AuthContext } from "../../contexts/AuthContext";
 import { ClipLoader } from "react-spinners";
+import { normalizarEmail } from "../../utils/normalizarEmail";
 
 function Login() {
     const navigate = useNavigate();
 
-    const [usuarioLogin, setUsuarioLogin] = useState<UsuarioLogin>(
-        {} as UsuarioLogin,
-    );
+    const [usuarioLogin, setUsuarioLogin] = useState<UsuarioLogin>({
+        id: 0,
+        nome: "",
+        usuario: "",
+        senha: "",
+        foto: "",
+        token: "",
+    });
 
     // Consumir os estados e funções da context (AuthContext)
     // usando o hook useContext (Consumer)
@@ -27,15 +33,23 @@ function Login() {
     }, [usuario]);
 
     function atualizarEstado(e: ChangeEvent<HTMLInputElement>) {
+        const valor =
+            e.target.name === "usuario"
+                ? normalizarEmail(e.target.value)
+                : e.target.value;
+
         setUsuarioLogin({
             ...usuarioLogin,
-            [e.target.name]: e.target.value,
+            [e.target.name]: valor,
         });
     }
 
     function login(e: SyntheticEvent<HTMLFormElement>) {
         e.preventDefault();
-        handleLogin(usuarioLogin);
+        handleLogin({
+            ...usuarioLogin,
+            usuario: normalizarEmail(usuarioLogin.usuario),
+        });
     }
 
     return (

@@ -2,6 +2,7 @@ import { useContext, useEffect } from "react";
 import { PencilSimple } from "@phosphor-icons/react";
 import { Link, useNavigate } from "react-router-dom";
 import { AuthContext } from "../../contexts/AuthContext";
+import { FOTO_PADRAO } from "../../utils/imagemPadrao";
 import { ToastAlerta } from "../../utils/ToastAlerta";
 
 function Perfil() {
@@ -31,8 +32,12 @@ function Perfil() {
 
                 <img
                     className="relative z-10 mx-auto -mt-20 size-40 rounded-full border-4 border-panel object-cover shadow-xl ring-1 ring-line sm:-mt-28 sm:size-52"
-                    src={usuario.foto}
+                    src={usuario.foto?.trim() || FOTO_PADRAO}
                     alt={`Foto de perfil de ${usuario.nome}`}
+                    onError={(event) => {
+                        event.currentTarget.onerror = null;
+                        event.currentTarget.src = FOTO_PADRAO;
+                    }}
                 />
 
                 <div className="surface-card relative -mt-20 flex flex-col items-center px-6 pb-10 pt-24 text-center sm:-mt-24 sm:pt-32">

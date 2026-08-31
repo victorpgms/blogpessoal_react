@@ -18,6 +18,8 @@ import { atualizar, buscar } from "../../services/Service";
 
 import axios from "axios";
 import { ToastAlerta } from "../../utils/ToastAlerta";
+import { FOTO_PADRAO } from "../../utils/imagemPadrao";
+import { normalizarEmail } from "../../utils/normalizarEmail";
 
 function AtualizarPerfil() {
     const navigate = useNavigate();
@@ -42,7 +44,11 @@ function AtualizarPerfil() {
                 },
             });
 
-            setUser((user) => ({ ...user, senha: "" }));
+            setUser((user) => ({
+                ...user,
+                usuario: normalizarEmail(user.usuario || ""),
+                senha: "",
+            }));
             setConfirmarSenha("");
         } catch (error: any) {
             if (error.toString().includes("401")) {
@@ -82,9 +88,14 @@ function AtualizarPerfil() {
     }
 
     function atualizarEstado(e: ChangeEvent<HTMLInputElement>) {
+        const valor =
+            e.target.name === "usuario"
+                ? normalizarEmail(e.target.value)
+                : e.target.value;
+
         setUser({
             ...user,
-            [e.target.name]: e.target.value,
+            [e.target.name]: valor,
         });
     }
 
@@ -109,11 +120,22 @@ function AtualizarPerfil() {
         setIsLoading(true);
 
         try {
-            await atualizar(`/usuarios/atualizar`, user, setUser, {
-                headers: {
-                    Authorization: token,
+            const usuarioNormalizado = {
+                ...user,
+                usuario: normalizarEmail(user.usuario || ""),
+                foto: user.foto?.trim() || FOTO_PADRAO,
+            };
+
+            await atualizar(
+                `/usuarios/atualizar`,
+                usuarioNormalizado,
+                setUser,
+                {
+                    headers: {
+                        Authorization: token,
+                    },
                 },
-            });
+            );
 
             ToastAlerta(
                 "Usuário atualizado com sucesso! \n Efetue o Login Novamente!", "sucesso"
@@ -142,9 +164,13 @@ function AtualizarPerfil() {
                         <div className="flex flex-col items-center justify-center border-b border-line bg-panel-muted p-8 lg:border-b-0 lg:border-r">
                             <div className="relative">
                                 <img
-                                    src={user.foto}
+                                    src={user.foto?.trim() || FOTO_PADRAO}
                                     alt={user.nome}
                                     className="size-44 rounded-full border-4 border-panel object-cover shadow-lg ring-1 ring-line sm:size-48"
+                                    onError={(event) => {
+                                        event.currentTarget.onerror = null;
+                                        event.currentTarget.src = FOTO_PADRAO;
+                                    }}
                                 />
                             </div>
 
