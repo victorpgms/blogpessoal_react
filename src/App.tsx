@@ -11,51 +11,64 @@ import Login from "./pages/login/Login";
 import ListaPostagens from "./components/postagem/listapostagens/ListaPostagens";
 import FormPostagem from "./components/postagem/formpostagem/FormPostagem";
 import DeletarPostagem from "./components/postagem/deletarpostagem/deletarpostem";
+import Perfil from "./pages/perfil/Perfil";
+import AtualizarPerfil from "./pages/perfil/AtualizarPerfil";
+import { ToastContainer } from "react-toastify";
+import 'react-toastify/dist/ReactToastify.css'
 
 function App() {
     return (
         <>
             <AuthProvider>
-                <BrowserRouter>
-                    <Navbar />
-                    <div className="min-h-[80vh]">
-                        <Routes>
-                            <Route path="/home" element={<Home />} />
-                            <Route path="/cadastro" element={<Cadastro />} />
-                            <Route path="/" element={<Login />} />
-                            <Route path="/tema" element={<ListaTemas />} />
-                            <Route
-                                path="/cadastrartema"
-                                element={<FormTema />}
-                            />
-                            <Route
-                                path="/editartema/:id"
-                                element={<FormTema />}
-                            />
-                            <Route
-                                path="/deletartema/:id"
-                                element={<DeletarTema />}
-                            />
-                            <Route
-                                path="/postagens"
-                                element={<ListaPostagens />}
-                            />
-                            <Route
-                                path="/cadastrarpostagem"
-                                element={<FormPostagem />}
-                            />
-                            <Route
-                                path="/editarpostagem/:id"
-                                element={<FormPostagem />}
-                            />
-                            <Route
-                                path="/deletarpostagem/:id"
-                                element={<DeletarPostagem />}
-                            />
-                        </Routes>
-                    </div>
-                    <Footer />
-                </BrowserRouter>
+                <ToastContainer/>
+                    <BrowserRouter>
+                        <Navbar />
+                        <div className="min-h-[80vh]">
+                            <Routes>
+                                <Route path="/home" element={<Home />} />
+                                <Route
+                                    path="/cadastro"
+                                    element={<Cadastro />}
+                                />
+                                <Route path="/" element={<Login />} />
+                                <Route path="/tema" element={<ListaTemas />} />
+                                <Route
+                                    path="/cadastrartema"
+                                    element={<FormTema />}
+                                />
+                                <Route
+                                    path="/editartema/:id"
+                                    element={<FormTema />}
+                                />
+                                <Route
+                                    path="/deletartema/:id"
+                                    element={<DeletarTema />}
+                                />
+                                <Route
+                                    path="/postagens"
+                                    element={<ListaPostagens />}
+                                />
+                                <Route
+                                    path="/cadastrarpostagem"
+                                    element={<FormPostagem />}
+                                />
+                                <Route
+                                    path="/editarpostagem/:id"
+                                    element={<FormPostagem />}
+                                />
+                                <Route
+                                    path="/deletarpostagem/:id"
+                                    element={<DeletarPostagem />}
+                                />
+                                <Route path="/perfil" element={<Perfil />} />
+                                <Route
+                                    path="/atualizarusuario"
+                                    element={<AtualizarPerfil />}
+                                />
+                            </Routes>
+                        </div>
+                        <Footer />
+                    </BrowserRouter>
             </AuthProvider>
         </>
     );
