@@ -38,7 +38,6 @@ function Login() {
         handleLogin(usuarioLogin);
     }
 
-    console.log(JSON.stringify(usuarioLogin));
     return (
         <div className="grid min-h-screen grid-cols-1 bg-app lg:grid-cols-2">
             <div className="flex items-center justify-center px-4 py-10 sm:px-8">
@@ -120,7 +119,7 @@ function Login() {
                 </form>
             </div>
             <div
-                className="relative hidden min-h-screen w-full bg-[url('https://i.imgur.com/ZZFAmzo.jpg')] bg-cover bg-center before:absolute before:inset-0 before:bg-slate-950/20 lg:block dark:before:bg-slate-950/40"
+                className="relative hidden min-h-screen w-full bg-[url('https://ik.imagekit.io/vpgms/BlogPessoal/20260816_064924.jpg')] bg-cover bg-center before:absolute before:inset-0 before:bg-slate-950/20 lg:block dark:before:bg-slate-950/40"
                 role="img"
                 aria-label="Paisagem decorativa"
             />

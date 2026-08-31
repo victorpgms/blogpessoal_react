@@ -96,7 +96,9 @@ function FormPostagem() {
         });
     }, [tema]);
 
-    function atualizarEstado(e: ChangeEvent<HTMLInputElement>) {
+    function atualizarEstado(
+        e: ChangeEvent<HTMLInputElement | HTMLTextAreaElement>,
+    ) {
         setPostagem({
             ...postagem,
             [e.target.name]: e.target.value,
@@ -188,15 +190,15 @@ function FormPostagem() {
                         <label className="field-label" htmlFor="texto">
                             Texto da Postagem
                         </label>
-                        <input
-                            type="text"
+                        <textarea
                             id="texto"
-                            placeholder="Texto"
                             name="texto"
+                            placeholder="Escreva o texto da postagem"
                             required
-                            className="form-field"
+                            rows={5}
+                            className="form-field min-h-32 resize-y"
                             value={postagem.texto}
-                            onChange={(e: ChangeEvent<HTMLInputElement>) =>
+                            onChange={(e: ChangeEvent<HTMLTextAreaElement>) =>
                                 atualizarEstado(e)
                             }
                         />

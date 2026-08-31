@@ -86,9 +86,6 @@ function Cadastro() {
         navigate("/");
     }
 
-    console.log(JSON.stringify(usuario));
-    console.log(confirmarSenha);
-
     return (
         <div className="grid min-h-screen grid-cols-1 bg-app lg:grid-cols-2">
             <div

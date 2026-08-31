@@ -25,8 +25,7 @@ function Home() {
 
                     <div className="flex justify-center md:justify-end">
                         <img
-                            src="https://i.imgur.com/fyfri1v.png"
-                            alt="Imagem da página Home"
+                            src="https://ik.imagekit.io/vpgms/BlogPessoal/leitura-gato.png"
                             className="w-full max-w-md rounded-2xl object-contain drop-shadow-2xl lg:max-w-lg"
                         />
                     </div>
