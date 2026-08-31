@@ -7,7 +7,7 @@ import { useNavigate } from "react-router-dom";
 import type Usuario from "../../models/Usuario";
 import { cadastrarUsuario } from "../../services/Service";
 import axios from "axios";
-import ClipLoader from "react-spinners/ClipLoader";
+import { ClipLoader } from "react-spinners";
 import { ToastAlerta } from "../../utils/ToastAlerta";
 import { FOTO_PADRAO } from "../../utils/imagemPadrao";
 import { normalizarEmail } from "../../utils/normalizarEmail";
@@ -140,15 +140,17 @@ function Cadastro() {
                             Usuario
                         </label>
                         <input
-                            type="text"
+                            type="email"
                             id="usuario"
                             name="usuario"
-                            placeholder="Usuario"
+                            placeholder="email@exemplo.com"
                             className="form-field"
                             value={usuario.usuario}
                             onChange={(e: ChangeEvent<HTMLInputElement>) =>
                                 atualizarEstado(e)
                             }
+                            autoComplete="email"
+                            required
                         />
                     </div>
                     <div>
@@ -165,6 +167,7 @@ function Cadastro() {
                             onChange={(e: ChangeEvent<HTMLInputElement>) =>
                                 atualizarEstado(e)
                             }
+                            autoComplete="new-password"
                         />
                     </div>
                     <div>
@@ -200,6 +203,7 @@ function Cadastro() {
                             onChange={(e: ChangeEvent<HTMLInputElement>) =>
                                 handleConfirmarSenha(e)
                             }
+                            autoComplete="new-password"
                         />
                     </div>
                     <div className="flex w-full flex-col-reverse gap-3 pt-2 sm:flex-row">
