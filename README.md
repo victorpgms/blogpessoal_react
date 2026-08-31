@@ -1,37 +1,62 @@
 # Blog Pessoal
 
-Aplicação front-end de um blog pessoal para compartilhar ideias, experiências e conteúdos sobre tecnologia. O projeto oferece autenticação, gerenciamento de postagens e temas, perfil de usuário e uma interface responsiva com suporte aos temas claro e escuro.
+Aplicação full stack para compartilhar ideias, experiências e conteúdos sobre tecnologia. O projeto reúne uma interface responsiva em React, uma API REST em Spring Boot e persistência de dados em banco relacional.
 
-## Sobre o projeto
+## Aplicação publicada
 
-O Blog Pessoal foi desenvolvido com React e TypeScript como uma aplicação de página única (SPA). A interface consome uma API REST para autenticar usuários e realizar operações de criação, consulta, edição e exclusão de postagens e temas.
+| Camada | Serviço | Endereço |
+| --- | --- | --- |
+| Frontend | Vercel | [blogpessoal-react-blush.vercel.app](https://blogpessoal-react-blush.vercel.app/) |
+| Backend | Render | [blogpessoal-6s9u.onrender.com](https://blogpessoal-6s9u.onrender.com) |
+| Banco de dados de produção | Neon PostgreSQL | Acesso restrito à API |
+| Documentação da API | Swagger UI | [Abrir documentação](https://blogpessoal-6s9u.onrender.com/swagger-ui/index.html) |
 
-O design utiliza uma identidade visual própria baseada em tons neutros e indigo, com foco em legibilidade, acessibilidade e consistência entre dispositivos.
+## Arquitetura
+
+```text
+Navegador
+   │
+   ▼
+React + TypeScript (Vercel)
+   │  HTTPS / JSON
+   ▼
+API REST Spring Boot (Render)
+   │  Spring Data JPA
+   ▼
+PostgreSQL (Neon)
+```
+
+Em produção, o frontend hospedado na Vercel consome a API publicada no Render. A API é responsável pelas regras de negócio, autenticação e acesso ao banco PostgreSQL hospedado na Neon.
+
+No ambiente de desenvolvimento, o backend também possui um perfil próprio para utilização de um banco MySQL local.
 
 ## Funcionalidades
 
-- Cadastro e autenticação de usuários;
-- Proteção das páginas que exigem autenticação;
-- Criação, listagem, edição e exclusão de postagens;
-- Criação, listagem, edição e exclusão de temas;
-- Associação de postagens a temas e usuários;
-- Visualização e atualização do perfil;
+- Cadastro, autenticação e atualização de usuários;
+- Autenticação baseada em token JWT;
+- Persistência da sessão enquanto o token estiver válido;
+- Proteção das páginas e dos endpoints que exigem autenticação;
+- Criação, consulta, edição e exclusão de postagens;
+- Criação, consulta, edição e exclusão de temas;
+- Associação de postagens a usuários e temas;
+- Visualização e atualização do perfil do usuário;
 - Alternância entre os temas claro e escuro;
-- Persistência da preferência de tema no navegador;
-- Detecção automática da preferência de tema do sistema;
 - Feedback visual com toasts, loaders e modais;
-- Layout responsivo para celulares, tablets e desktops.
+- Layout responsivo para celulares, tablets e desktops;
+- Documentação interativa da API com Swagger UI.
 
 ## Tecnologias utilizadas
+
+### Frontend
 
 | Tecnologia | Utilização |
 | --- | --- |
 | React 19 | Construção da interface e dos componentes |
-| TypeScript 6 | Tipagem estática e maior segurança durante o desenvolvimento |
+| TypeScript 6 | Tipagem estática e segurança durante o desenvolvimento |
 | Vite 8 | Ambiente de desenvolvimento e geração do build |
 | Tailwind CSS 4 | Estilização, responsividade e sistema visual |
-| React Router DOM 7 | Rotas e navegação da aplicação |
-| Context API | Gerenciamento do estado de autenticação e do tema |
+| React Router DOM 7 | Rotas e navegação da SPA |
+| Context API | Gerenciamento dos estados de autenticação e tema |
 | Axios | Comunicação com a API REST |
 | React Toastify | Mensagens de sucesso, erro e informação |
 | React Spinners | Indicadores de carregamento |
@@ -39,7 +64,38 @@ O design utiliza uma identidade visual própria baseada em tons neutros e indigo
 | Phosphor Icons | Ícones da interface |
 | ESLint | Análise estática e padronização do código |
 
-## Estrutura do projeto
+### Backend
+
+| Tecnologia | Utilização |
+| --- | --- |
+| Java 17 | Linguagem utilizada na API |
+| Spring Boot 4 | Estrutura principal do backend |
+| Spring Web MVC | Criação dos controllers e endpoints REST |
+| Spring Data JPA | Persistência e acesso aos dados |
+| Spring Security | Autorização e proteção dos endpoints |
+| JWT (JJWT) | Geração e validação dos tokens de acesso |
+| BCrypt | Criptografia das senhas dos usuários |
+| Bean Validation | Validação dos dados recebidos pela API |
+| SpringDoc OpenAPI | Documentação interativa com Swagger UI |
+| Maven | Gerenciamento de dependências e build |
+| Docker | Empacotamento do backend para publicação |
+
+### Banco de dados e infraestrutura
+
+| Tecnologia | Ambiente |
+| --- | --- |
+| PostgreSQL | Banco de produção hospedado na Neon |
+| MySQL | Banco utilizado pelo perfil local de desenvolvimento |
+| Vercel | Hospedagem e entrega do frontend |
+| Render | Hospedagem do backend |
+| Neon | Hospedagem gerenciada do PostgreSQL de produção |
+
+## Repositórios
+
+- [Frontend — React](https://github.com/victorpgms/blogpessoal_react)
+- [Backend — Spring Boot](https://github.com/victorpgms/blog-pessoal-spring)
+
+## Estrutura do frontend
 
 ```text
 src/
@@ -49,7 +105,7 @@ src/
 ├── models/         # Interfaces TypeScript das entidades
 ├── pages/          # Páginas principais da aplicação
 ├── services/       # Configuração e funções de acesso à API
-├── utils/          # Funções auxiliares, como os alertas
+├── utils/          # Funções auxiliares
 ├── App.tsx         # Configuração das rotas e estrutura principal
 └── index.css       # Tokens, estilos globais e componentes visuais
 ```
@@ -59,20 +115,100 @@ src/
 ### Pré-requisitos
 
 - Node.js em uma versão LTS atual;
-- npm.
+- npm;
+- Java 17;
+- MySQL;
+- Git.
 
-### Instalação
+### 1. Backend
+
+Clone o repositório da API:
+
+```bash
+git clone https://github.com/victorpgms/blog-pessoal-spring.git
+cd blog-pessoal-spring
+```
+
+O perfil `dev` utiliza o MySQL local, cria o banco `db_blogpessoal` quando necessário e atualiza as tabelas por meio do Hibernate. Caso seu usuário ou senha do MySQL sejam diferentes, ajuste as propriedades do perfil de desenvolvimento antes de iniciar a aplicação.
+
+No Windows:
+
+```powershell
+.\mvnw.cmd spring-boot:run -Dspring-boot.run.profiles=dev
+```
+
+No Linux ou macOS:
+
+```bash
+./mvnw spring-boot:run -Dspring-boot.run.profiles=dev
+```
+
+A API estará disponível em `http://localhost:8080`.
+
+### 2. Frontend
+
+Em outro terminal, clone e configure o frontend:
 
 ```bash
 git clone https://github.com/victorpgms/blogpessoal_react.git
 cd blogpessoal_react
 npm install
+```
+
+Crie um arquivo `.env` na raiz do frontend com o endereço da API:
+
+```env
+VITE_API_URL=http://localhost:8080
+```
+
+Inicie a aplicação:
+
+```bash
 npm run dev
 ```
 
 Depois, acesse o endereço informado pelo Vite no terminal, normalmente `http://localhost:5173`.
 
-## Scripts disponíveis
+## Variáveis de ambiente do backend em produção
+
+O perfil de produção recebe pelo ambiente do Render as credenciais de conexão fornecidas pela Neon:
+
+| Variável | Finalidade |
+| --- | --- |
+| `POSTGRESHOST` | Host do PostgreSQL |
+| `POSTGRESPORT` | Porta do PostgreSQL |
+| `POSTGRESDATABASE` | Nome do banco |
+| `POSTGRESUSER` | Usuário do banco |
+| `POSTGRESPASSWORD` | Senha do banco |
+
+Os valores dessas variáveis não devem ser versionados no repositório.
+
+## Principais endpoints da API
+
+| Método | Endpoint | Finalidade |
+| --- | --- | --- |
+| `POST` | `/usuarios/cadastrar` | Cadastrar um usuário |
+| `POST` | `/usuarios/logar` | Autenticar um usuário |
+| `GET` | `/usuarios/all` | Listar usuários |
+| `PUT` | `/usuarios/atualizar` | Atualizar um usuário |
+| `GET` | `/postagens` | Listar postagens |
+| `GET` | `/postagens/{id}` | Consultar uma postagem |
+| `POST` | `/postagens` | Cadastrar uma postagem |
+| `PUT` | `/postagens` | Atualizar uma postagem |
+| `DELETE` | `/postagens/{id}` | Excluir uma postagem |
+| `GET` | `/tema` | Listar temas |
+| `GET` | `/tema/{id}` | Consultar um tema |
+| `POST` | `/tema` | Cadastrar um tema |
+| `PUT` | `/tema` | Atualizar um tema |
+| `DELETE` | `/tema/{id}` | Excluir um tema |
+
+Os endpoints protegidos esperam o token no cabeçalho da requisição:
+
+```http
+Authorization: Bearer <token>
+```
+
+## Scripts do frontend
 
 | Comando | Descrição |
 | --- | --- |
@@ -81,17 +217,7 @@ Depois, acesse o endereço informado pelo Vite no terminal, normalmente `http://
 | `npm run lint` | Analisa o projeto com ESLint |
 | `npm run preview` | Executa uma prévia local do build |
 
-## Integração com a API
-
-A aplicação consome a API REST hospedada em:
-
-```text
-https://blogpessoal-6s9u.onrender.com
-```
-
-O endereço base e as funções de requisição estão centralizados em `src/services/Service.ts`.
-
-## Principais rotas
+## Principais rotas do frontend
 
 | Rota | Finalidade |
 | --- | --- |
@@ -108,8 +234,6 @@ O endereço base e as funções de requisição estão centralizados em `src/ser
 | `/deletartema/:id` | Exclusão de tema |
 | `/perfil` | Perfil do usuário |
 | `/atualizarusuario` | Atualização do perfil |
-
-As rotas de edição e exclusão utilizam o identificador do respectivo recurso.
 
 ## Autor
 
